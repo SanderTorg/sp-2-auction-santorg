@@ -1,4 +1,4 @@
-import "./style.css";
+import "./styles/style.css";
 import typescriptLogo from "./typescript.svg";
 import viteLogo from "/vite.svg";
 
