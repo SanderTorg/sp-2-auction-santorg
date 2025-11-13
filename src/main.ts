@@ -1,21 +1,79 @@
+import Footer from "./components/footer/Footer";
+import Navbar from "./components/header/Navbar";
+import router from "./router";
 import "./styles/style.css";
-import typescriptLogo from "./typescript.svg";
-import viteLogo from "/vite.svg";
 
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`;
+async function main() {
+  document.addEventListener("DOMContentLoaded", async () => {
+    const headerNavEl = document.getElementById("js-header");
+    const footerEl = document.getElementById("js-footer");
+
+    const navHtml = await Navbar();
+    if (headerNavEl && navHtml) {
+      if (typeof navHtml === "string") {
+        headerNavEl.innerHTML = navHtml;
+      } else if (navHtml instanceof Node) {
+        headerNavEl.innerHTML = "";
+        headerNavEl.appendChild(navHtml);
+      }
+    }
+
+    setupNavLinks();
+
+    const footerHtml = await Footer();
+    if (footerEl && footerHtml) {
+      if (typeof footerHtml === "string") {
+        footerEl.innerHTML = footerHtml;
+      } else if (footerHtml instanceof Node) {
+        footerEl.innerHTML = "";
+        footerEl.appendChild(footerHtml);
+      }
+    }
+
+    renderMainContent(window.location.pathname);
+  });
+}
+
+main().catch((error) => {
+  console.error("Error in main:", error);
+});
+
+window.addEventListener("popstate", () => {
+  renderMainContent(window.location.pathname);
+});
+
+function setupNavLinks() {
+  const navEl = document.getElementById("js-nav");
+  if (!navEl) return;
+
+  const navLinks: NodeListOf<HTMLAnchorElement> =
+    navEl.querySelectorAll("a[href^='/']");
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", navigate);
+  });
+}
+function navigate(event: MouseEvent) {
+  event.preventDefault();
+
+  const el = event?.target as HTMLAnchorElement;
+  const path = el?.getAttribute("href");
+
+  if (typeof path === "string") {
+    history.pushState({ path }, "", path);
+    renderMainContent(path);
+  }
+}
+
+async function renderMainContent(path = "") {
+  const mainContentEl = document.getElementById("main-content");
+  if (!mainContentEl || !path) return;
+
+  const html = await router(path);
+  if (typeof html === "string") {
+    mainContentEl.innerHTML = html;
+  } else if (html instanceof Node) {
+    mainContentEl.innerHTML = "";
+    mainContentEl.appendChild(html);
+  }
+}
