@@ -5,6 +5,8 @@ import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import RegisterPage from "../pages/RegisterPage";
 import ProfilePage from "../pages/ProfilePage";
+import NotLoggedInPage from "../pages/NotLoggedInPage";
+import { getUser } from "../utils/storage";
 
 const ROUTES = {
   home: {
@@ -45,6 +47,17 @@ export default async function router(
   const currentRoute = Object.values(paths).find((route) =>
     toRegexPath(route.url).test(currentPath)
   );
+
+  const user = getUser();
+
+  const protectedRoutes = [ROUTES.createListing.url, ROUTES.profile.url];
+  const isProtectedRoute = currentRoute
+    ? protectedRoutes.includes(currentRoute.url as any)
+    : false;
+
+  if (isProtectedRoute && !user) {
+    return await NotLoggedInPage();
+  }
 
   if (!currentRoute) {
     return await NotFoundPage();
