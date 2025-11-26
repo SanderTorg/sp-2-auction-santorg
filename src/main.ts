@@ -1,7 +1,8 @@
 import Footer from "./components/footer/Footer";
-import Navbar from "./components/header/Navbar";
+import Navbar, { toggleMenu } from "./components/header/Navbar";
 import router from "./router";
 import "./styles/style.css";
+import { setupNavFunctions } from "./components/header/Navbar";
 
 async function main() {
   document.addEventListener("DOMContentLoaded", async () => {
@@ -17,6 +18,8 @@ async function main() {
         headerNavEl.appendChild(navHtml);
       }
     }
+    setupNavFunctions();
+    toggleMenu();
 
     setupNavLinks();
 

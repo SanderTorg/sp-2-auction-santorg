@@ -7,12 +7,22 @@
     <title>sp-2-auction-santorg</title>
     <link rel="stylesheet" href="/src/styles/style.css" />
   </head>
-  <body class="flex flex-col min-h-screen">
-    <header id="js-header" class=""></header>
 
-    <div id="main-content"></div>
+  <body class="min-h-screen grid grid-rows-[1fr_auto]">
+    <header
+      id="js-header"
+      class="z-100 fixed flex bg-gray-900 text-white p-3 justify-center items-center w-full"
+    ></header>
+
+    <div
+      id="main-content"
+      class="flex flex-col px-4 mt-[133px] min-[450px]:mt-[97px] pb-5"
+    ></div>
     <script type="module" src="./src/main.ts"></script>
 
-    <footer id="js-footer"></footer>
+    <footer
+      id="js-footer"
+      class="flex bg-gray-900 text-white p-4 text-center justify-center items-center w-full"
+    ></footer>
   </body>
 </html>
