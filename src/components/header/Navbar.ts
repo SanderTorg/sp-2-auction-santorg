@@ -1,10 +1,22 @@
 import { createHTML } from "../../utils/utils";
-import { getUser, logout } from "../../utils/storage";
-import { getCredits } from "../../utils/storage";
+import { isLoggedIn, logout } from "../../utils/storage";
+import {
+  fetchUserProfile,
+  getAvatarAlt,
+  getAvatarUrl,
+  getCredits,
+  getNameApi,
+} from "../../services/userApi";
 
 export default async function Navbar() {
+  if (isLoggedIn()) {
+    const name = getNameApi();
+    await fetchUserProfile(name);
+  }
+
   const template = mainTemplate();
-  return createHTML(template);
+  const html = createHTML(template);
+  return html;
 }
 
 function mainTemplate() {
@@ -30,9 +42,12 @@ function navbarTemplate() {
 }
 
 function userInfoTemplate() {
-  const username = getUser();
+  const loggedIn = isLoggedIn();
+  const name = getNameApi();
   const credits = getCredits() || 0;
-  if (!username) {
+  const avatarUrl = getAvatarUrl();
+  const avatarAlt = getAvatarAlt();
+  if (!loggedIn) {
     return `
       <div class="flex items-center gap-3 flex-wrap justify-center">
         ${logInButtonTemplate()}  
@@ -45,9 +60,10 @@ function userInfoTemplate() {
         <div>
           Credit: ${credits}$
         </div>
-        <div class="hidden sm:flex">
-          Hi, ${username}!
-        </div>
+        <a href="/profile" >
+          <div class="sr-only">${name}</div>
+          <img src="${avatarUrl}" alt="${avatarAlt}" class="w-10 h-10 rounded-full" />
+        </a>
         ${logoutButtonTemplate()}
       </div>
     `;
