@@ -20,7 +20,6 @@ async function main() {
     }
     setupNavFunctions();
     toggleMenu();
-
     setupNavLinks();
 
     const footerHtml = await Footer();
