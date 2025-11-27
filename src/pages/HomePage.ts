@@ -1,27 +1,15 @@
 import ListingCard from "../components/listing-card/ListingCard";
-import { get } from "../services/api";
+import { getAllListings } from "../services/listingsApi";
 import { createHTML } from "../utils/utils";
 
 export default async function HomePage() {
-  let allListings: any[] = [];
-  let featuredListings: any[] = [];
-
-  try {
-    const response = await get("/auction/listings");
-    allListings = response.data || [];
-
-    featuredListings = [...allListings]
-      .sort((a, b) => (b._count?.bids || 0) - (a._count?.bids || 0))
-      .slice(0, 6);
-  } catch (error) {
-    console.error("Failed to load listings:", error);
-  }
+  const allListings = await getAllListings();
 
   const template = homePageTemplate();
   const html = createHTML(template);
 
   setTimeout(() => {
-    renderListings(featuredListings, allListings);
+    renderListings(allListings);
   }, 0);
 
   return html;
@@ -63,9 +51,12 @@ function homePageTemplate() {
   `;
 }
 
-function renderListings(featuredListings: any[], allListings: any[]) {
+function renderListings(listings: any[]) {
   const featuredListingsEl = document.getElementById("js-featured-listings");
   const allListingsEl = document.getElementById("js-all-listings");
+
+  const featuredListings = popularListings(listings);
+  const allListings = latestListings(listings);
 
   if (featuredListingsEl) {
     featuredListingsEl.innerHTML = featuredListings
@@ -77,4 +68,16 @@ function renderListings(featuredListings: any[], allListings: any[]) {
       .map((listing) => ListingCard(listing))
       .join("");
   }
+}
+
+function latestListings(listings: any[]) {
+  return listings.sort(
+    (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+  );
+}
+
+function popularListings(listings: any[]) {
+  return listings
+    .sort((a, b) => (b._count?.bids || 0) - (a._count?.bids || 0))
+    .slice(0, 6);
 }

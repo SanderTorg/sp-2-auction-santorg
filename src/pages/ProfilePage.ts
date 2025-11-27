@@ -52,7 +52,7 @@ function profilePageTemplate(data: ProfileData | null) {
           <img src="${profile.avatar.url}" alt="${
     profile.avatar.alt
   }" class="w-15 h-15 rounded-full object-cover" />
-          <div class="w-full flex flex-wrap gap-2 justify-between items-center">
+          <div class="w-full flex flex-wrap items-center">
             <div class="flex flex-col">
               <h3 class="flex text-xl font-bold">${profile.name}</h3>
               <div class="flex gap-1 flex-wrap">
@@ -68,18 +68,6 @@ function profilePageTemplate(data: ProfileData | null) {
                 <p class="flex font-semibold">Wins: ${profile._count.wins}</p>
               </div>
             </div>
-          
-            <div class="flex justify-end">
-            ${
-              ownProfile
-                ? `
-              <a href="/edit-profile">
-              <button id="js-edit-profile-button" class="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">
-                Edit Profile
-              </button></a>`
-                : ""
-            }
-            </div>
           </div>
         </div>
         <div class="w-full gap-3 flex flex-col items-start">
@@ -87,10 +75,26 @@ function profilePageTemplate(data: ProfileData | null) {
         </div>
       </div>
 
-      <div class="flex gap-4 w-full justify-center border-t p-4">
-        <button id="js-my-listings-button" class="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">My Listings</button>
-        <button id="js-my-bids-button" class="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">My Bids</button>
-      </div>
+      ${
+        ownProfile
+          ? `
+            <div class="flex gap-4 w-full flex-wrap justify-center border-t p-4">
+              <button id="js-my-listings-button" class="p-2 font-semibold bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">My Listings</button>
+              <button id="js-my-bids-button" class="p-2 font-semibold bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">My Bids</button>
+              <a href="/edit-profile">
+                <button id="js-edit-profile-button" class="p-2 font-semibold bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">
+                  Edit Profile
+                </button>
+              </a>
+              <a href="/create-listing">
+                <button id="js-create-listing-button" class="p-2 font-semibold bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">
+                  Create Listing
+                </button>
+              </a>
+            </div>
+              `
+          : ""
+      }
     </section>
     `;
 }
