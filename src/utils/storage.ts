@@ -1,18 +1,7 @@
+import { clearProfileCache } from "../services/userApi";
+
 const TOKEN_KEY = "token";
 const USER_KEY = "user";
-
-//---- Utility functions for CREDITS management ----//
-
-export function getCredits(): number {
-  const credits = localStorage.getItem("userCredits");
-  return credits ? parseInt(credits, 10) : 0;
-}
-
-export function saveCredits(credits: number): void {
-  localStorage.setItem("userCredits", credits.toString());
-}
-
-//---- Existing utility functions for AUTH and USER management ----//
 
 export function saveToken(token: any) {
   saveToStorage(TOKEN_KEY, token);
@@ -30,7 +19,7 @@ export function saveUser(user: any) {
   saveToStorage(USER_KEY, user);
 }
 
-export function getUser(): any | null {
+export function getUsernameStorage(): any | null {
   const user = getFromStorage(USER_KEY);
   return user ? user.name : null;
 }
@@ -39,12 +28,18 @@ export function clearUser(): void {
   localStorage.removeItem(USER_KEY);
 }
 
-export function clearStorage() {
-  localStorage.clear();
+export function remvoveToken(): void {
+  localStorage.removeItem(TOKEN_KEY);
+}
+
+export function removeUser(): void {
+  localStorage.removeItem(USER_KEY);
 }
 
 export function logout() {
-  clearStorage();
+  remvoveToken();
+  removeUser();
+  clearProfileCache();
   window.location.href = "/login";
 }
 
@@ -64,4 +59,9 @@ export function getFromStorage(key: string) {
 export function getUserData() {
   const foo = getFromStorage(USER_KEY);
   return foo;
+}
+
+export function isOwnProfile(profileName: string): boolean {
+  const username = getUsernameStorage();
+  return username === profileName;
 }

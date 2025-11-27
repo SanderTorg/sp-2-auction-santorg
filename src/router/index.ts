@@ -6,7 +6,8 @@ import NotFoundPage from "../pages/NotFoundPage";
 import RegisterPage from "../pages/RegisterPage";
 import ProfilePage from "../pages/ProfilePage";
 import NotLoggedInPage from "../pages/NotLoggedInPage";
-import { getUser } from "../utils/storage";
+import { getUsernameStorage } from "../utils/storage";
+import { EditProfilePage } from "../pages/EditProfilePage";
 
 const ROUTES = {
   home: {
@@ -29,6 +30,10 @@ const ROUTES = {
     url: "/profile",
     component: ProfilePage,
   },
+  editProfile: {
+    url: "/edit-profile",
+    component: EditProfilePage,
+  },
   singleListing: {
     url: "/listing/:id",
     component: SingleListingPage,
@@ -48,9 +53,13 @@ export default async function router(
     toRegexPath(route.url).test(currentPath)
   );
 
-  const user = getUser();
+  const user = getUsernameStorage();
 
-  const protectedRoutes = [ROUTES.createListing.url, ROUTES.profile.url];
+  const protectedRoutes = [
+    ROUTES.createListing.url,
+    ROUTES.profile.url,
+    ROUTES.editProfile.url,
+  ];
   const isProtectedRoute = currentRoute
     ? protectedRoutes.includes(currentRoute.url as any)
     : false;
