@@ -7,6 +7,12 @@ export default async function SingleListingPage() {
 
 function singleListingPageTemplate() {
   return `
+  <section>
     <h1>Single Listing Page</h1>
+  </section>
     `;
 }
+
+function getListingDetails(listingId: string) {}
+
+function setupSingleListingPage() {}
