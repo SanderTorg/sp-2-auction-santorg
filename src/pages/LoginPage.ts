@@ -1,6 +1,7 @@
 import { createHTML } from "../utils/utils";
 import { loginUser } from "../services/authApi";
 import { saveToken, saveUser } from "../utils/storage";
+import { errorTemplate, successTemplate } from "../components/auth/Message";
 
 export default async function LoginPage() {
   const template = loginPageTemplate();
@@ -14,8 +15,8 @@ function loginPageTemplate() {
     <section id="login-page" class="flex flex-col items-center gap-3 mx-auto my-auto max-w-md w-full">
       <h1 class="text-2xl font-bold flex text-center">Login to Your Account</h1>
       
-      <div id="js-show-error" class="hidden w-full p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg"></div>
-      <div id="js-show-success" class="hidden w-full p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg"></div>
+      ${errorTemplate()}
+      ${successTemplate()}
 
       <form id="js-login-form" class="flex flex-col gap-4 border p-6 rounded-lg shadow-md w-full ">
         <div class="flex flex-col relative">

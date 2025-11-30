@@ -26,10 +26,10 @@ function mainTemplate() {
 function navbarTemplate() {
   return `
 <nav id="js-navbar"class="flex text-center justify-between gap-1 items-center p-2 text-white w-full flex-wrap">
-  <div class="flex items-center gap-2 justify-between w-full min-[450px]:w-auto">
-    <a href="/" class="flex text-2xl font-bold text-center min-[450px]:order-2">Auction App</a>
+  <div class="flex items-center gap-2 justify-between w-full min-[463px]:w-auto">
+    <a href="/" class="flex text-2xl font-bold text-center min-[463px]:order-2">Auction App</a>
 
-    <div class="min-[450px]:order-1 cursor-pointer hover:bg-red-500/40 p-1 rounded" id="js-hamburger" aria-controls="js-nav-menu" aria-expanded="false">
+    <div class="min-[463px]:order-1 cursor-pointer hover:bg-red-500/40 p-1 rounded" id="js-hamburger" aria-controls="js-nav-menu" aria-expanded="false">
       <span class="block w-[25px] h-[3px] my-[5px] bg-white transition-all duration-300 ease-in-out"></span>
       <span class="block w-[25px] h-[3px] my-[5px] bg-white transition-all duration-300 ease-in-out"></span>
       <span class="block w-[25px] h-[3px] my-[5px] bg-white transition-all duration-300 ease-in-out"></span>
@@ -56,7 +56,7 @@ function userInfoTemplate() {
       `;
   } else {
     return `
-      <div class="flex items-center gap-3 flex-wrap justify-center w-full min-[450px]:w-auto">
+      <div class="flex items-center gap-3 flex-wrap justify-center w-full min-[463px]:w-auto">
         <div>
           Credit: ${credits}$
         </div>

@@ -5,6 +5,7 @@ import { getUsernameStorage } from "../utils/storage";
 import { fetchUserProfile, refreshProfile } from "../services/userApi";
 import { showError, showSuccess } from "./LoginPage";
 import { put } from "../services/api";
+import { errorTemplate, successTemplate } from "../components/auth/Message";
 
 export async function EditProfilePage() {
   if (!requireAuth()) {
@@ -38,8 +39,8 @@ function editProfilePageTemplate(profileData: any) {
         <p class="text-gray-600">Update your profile information</p>
       </div>
 
-      <div id="js-show-error" class="hidden w-full p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg"></div>
-      <div id="js-show-success" class="hidden w-full p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg"></div>
+      ${errorTemplate()}
+      ${successTemplate()}
 
       <form id="js-edit-profile-form" class="w-full flex flex-col gap-6 border p-6 rounded-lg shadow-md">
         <div class="flex flex-col gap-2">
