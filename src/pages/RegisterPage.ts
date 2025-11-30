@@ -1,6 +1,7 @@
 import { registerUser } from "../services/authApi";
 import { createHTML } from "../utils/utils";
 import { showError, showSuccess } from "./LoginPage";
+import { errorTemplate, successTemplate } from "../components/auth/Message";
 
 export default async function RegisterPage() {
   const template = registerPageTemplate();
@@ -15,8 +16,8 @@ function registerPageTemplate() {
   <section class="flex flex-col items-center gap-3 mx-auto my-auto max-w-md w-full">
     <h1 class="text-2xl font-bold">Register Page</h1>
     
-    <div id="js-show-error" class="hidden w-full p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg"></div>
-    <div id="js-show-success" class="hidden w-full p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg"></div>
+    ${errorTemplate()}
+    ${successTemplate()}
 
     <form id="js-register-form" class="flex flex-col gap-4 border p-6 rounded-lg shadow-md w-full ">
       <div class="flex flex-col relative">
