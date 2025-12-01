@@ -80,7 +80,7 @@ function navMenuTemplate() {
       <a href="/profile" class="text-white hover:bg-red-500/10 p-2 rounded ">Profile</a>
      </li>
      <li>
-      <a href="/create-listing" class="text-white hover:bg-red-500/10 p-2 rounded ">Create Listing</a>
+      <a href="/listings" class="text-white hover:bg-red-500/10 p-2 rounded ">All listings</a>
      </li>
     </ul>
   `;

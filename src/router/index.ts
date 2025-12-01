@@ -8,6 +8,7 @@ import ProfilePage from "../pages/ProfilePage";
 import NotLoggedInPage from "../pages/NotLoggedInPage";
 import { getUsernameStorage } from "../utils/storage";
 import { EditProfilePage } from "../pages/EditProfilePage";
+import { ListingsPage } from "../pages/ListingsPage";
 
 const ROUTES = {
   home: {
@@ -22,10 +23,6 @@ const ROUTES = {
     url: "/register",
     component: RegisterPage,
   },
-  createListing: {
-    url: "/create-listing",
-    component: CreateListingsPage,
-  },
   profile: {
     url: "/profile",
     component: ProfilePage,
@@ -34,9 +31,17 @@ const ROUTES = {
     url: "/edit-profile",
     component: EditProfilePage,
   },
+  allListings: {
+    url: "/listings",
+    component: ListingsPage,
+  },
   singleListing: {
     url: "/listing/:id",
     component: SingleListingPage,
+  },
+  createListing: {
+    url: "/create-listing",
+    component: CreateListingsPage,
   },
 } as const;
 
