@@ -8,7 +8,7 @@ import ProfilePage from "../pages/ProfilePage";
 import NotLoggedInPage from "../pages/NotLoggedInPage";
 import { getUsernameStorage } from "../utils/storage";
 import { EditProfilePage } from "../pages/EditProfilePage";
-import { ListingsPage } from "../pages/ListingsPage";
+import ListingsPage from "../pages/ListingsPage";
 
 const ROUTES = {
   home: {
