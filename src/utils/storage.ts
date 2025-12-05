@@ -2,6 +2,7 @@ import { clearProfileCache } from "../services/userApi";
 
 const TOKEN_KEY = "token";
 const USER_KEY = "user";
+const API_KEY = "4cace437-0d3d-41b9-95b6-d5deb6a8d9d4";
 
 export function saveToken(token: any) {
   saveToStorage(TOKEN_KEY, token);
@@ -9,6 +10,10 @@ export function saveToken(token: any) {
 
 export function getToken(): string | null {
   return getFromStorage(TOKEN_KEY);
+}
+
+export function getApiKey(): string {
+  return API_KEY;
 }
 
 export function clearKey(key: string) {
@@ -39,6 +44,7 @@ export function removeUser(): void {
 export function logout() {
   remvoveToken();
   removeUser();
+  localStorage.removeItem(API_KEY);
   clearProfileCache();
   window.location.href = "/login";
 }
