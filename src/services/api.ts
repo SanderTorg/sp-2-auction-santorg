@@ -1,7 +1,6 @@
-import { getToken } from "../utils/storage";
+import { getToken, getApiKey } from "../utils/storage";
 
 const BASE_API = "https://v2.api.noroff.dev";
-const API_KEY = "4cace437-0d3d-41b9-95b6-d5deb6a8d9d4";
 interface ApiClientOptions {
   body?: any;
   headers?: Record<string, string>;
@@ -15,11 +14,15 @@ export async function apiClient(
   const { body, ...customOptions } = options;
 
   const token = getToken();
+  const apiKey = getApiKey();
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    "X-Noroff-API-Key": API_KEY,
   };
+
+  if (apiKey) {
+    headers["X-Noroff-API-Key"] = apiKey;
+  }
 
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;

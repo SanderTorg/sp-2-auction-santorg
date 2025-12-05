@@ -53,7 +53,7 @@ function toRegexPath(path: string) {
 export default async function router(
   currentPath = "",
   paths = ROUTES
-): Promise<string | ChildNode | null> {
+): Promise<string | ChildNode | DocumentFragment | null> {
   const currentRoute = Object.values(paths).find((route) =>
     toRegexPath(route.url).test(currentPath)
   );
