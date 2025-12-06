@@ -181,11 +181,8 @@ async function handleEditProfile(event: Event) {
     };
   }
 
-  console.log("Sending updateData:", updateData);
-
   try {
-    const response = await put(`/auction/profiles/${username}`, updateData);
-    console.log(response);
+    await put(`/auction/profiles/${username}`, updateData);
 
     await refreshProfile();
 

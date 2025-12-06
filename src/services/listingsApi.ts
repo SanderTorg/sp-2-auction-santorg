@@ -1,4 +1,4 @@
-import { get } from "./api";
+import { get, del } from "./api";
 
 export async function getAllListings() {
   try {
@@ -9,5 +9,15 @@ export async function getAllListings() {
   } catch (error) {
     console.error("Failed to load listings:", error);
     return [];
+  }
+}
+
+export async function deleteListing(listingId: string) {
+  try {
+    await del(`/auction/listings/${listingId}`);
+    return true;
+  } catch (error) {
+    console.error("Failed to delete listing:", error);
+    throw error;
   }
 }

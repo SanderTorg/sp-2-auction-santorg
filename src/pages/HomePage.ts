@@ -1,6 +1,7 @@
 import ListingCard from "../components/listing-card/ListingCard";
 import { getAllListings } from "../services/listingsApi";
 import { createHTML } from "../utils/utils";
+import heroImage from "../images/image/Image-1.webp";
 
 export default async function HomePage() {
   const allListings = await getAllListings();
@@ -10,15 +11,64 @@ export default async function HomePage() {
 
   setTimeout(() => {
     renderListings(allListings);
+    setupHomeSearch();
   }, 0);
 
   return html;
 }
 
+function setupHomeSearch() {
+  const form = document.getElementById("js-home-search-form");
+  const input = document.getElementById("js-home-search") as HTMLInputElement;
+
+  if (form && input) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const query = input.value.trim();
+      if (query) {
+        window.location.href = `/listings?search=${encodeURIComponent(query)}`;
+      }
+    });
+  }
+}
+
 function homePageTemplate() {
   return `
-    <section id="home-page" class="flex flex-col items-center gap-5 mx-auto max-w-3xl w-full">
-      <h1 class="text-3xl font-bold">Welcome to the auction house</h1>
+    <section id="home-page" class="flex flex-col items-center gap-5 mx-auto max-w-4xl w-full">
+    
+    <section class="w-full flex flex-col items-center justify-center gap-3 max-h-1/6 overflow-clip relative bg-black ">
+      <img src="${heroImage}" alt="Auction Illustration" class="w-full opacity-40 object-cover" />
+      <div class="absolute flex flex-col items-center gap-3 text-white px-3">
+        <h1 class="text-3xl text-center font-bold">Welcome to the auction house</h1>
+        <p class="text-center">
+          Discover amazing items up for auction. Browse, bid, and win!
+        </p>
+        <button 
+          onclick="window.location.href='/listings'"
+          class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+        >
+          Explore Listings
+        </button>
+      </div>
+      </section>
+
+      <section class="w-full max-w-md">
+        <form id="js-home-search-form" class="flex gap-2">
+          <input 
+            type="text" 
+            id="js-home-search" 
+            placeholder="Search for items..." 
+            class="flex w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button 
+            type="submit" 
+            class="bg-blue-600 text-white px-3 py-2
+             rounded-lg hover:bg-blue-700 font-semibold transition-colors"
+          >
+            Search
+          </button>
+        </form>
+      </section>
 
       <section class="w-full flex flex-col gap-6">
         <div class="flex justify-between items-center">
