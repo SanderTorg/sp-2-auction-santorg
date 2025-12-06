@@ -1,5 +1,6 @@
 import SingleListingPage from "../pages/SingleListingPage";
 import CreateListingsPage from "../pages/CreateListingsPage";
+import EditListingPage from "../pages/EditListingPage";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
@@ -43,6 +44,10 @@ const ROUTES = {
     url: "/create-listing",
     component: CreateListingsPage,
   },
+  editListing: {
+    url: "/edit-listing/:id",
+    component: EditListingPage,
+  },
 } as const;
 
 function toRegexPath(path: string) {
@@ -62,6 +67,7 @@ export default async function router(
 
   const protectedRoutes = [
     ROUTES.createListing.url,
+    ROUTES.editListing.url,
     ROUTES.profile.url,
     ROUTES.editProfile.url,
   ];

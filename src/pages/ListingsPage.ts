@@ -14,7 +14,21 @@ export default async function ListingsPage() {
 
   setTimeout(() => {
     filteredListings = [...allListings];
-    renderListings(allListings);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get("search");
+
+    if (searchQuery) {
+      const searchInput = document.getElementById(
+        "js-search"
+      ) as HTMLInputElement;
+      if (searchInput) {
+        searchInput.value = searchQuery;
+        filteredListings = filterBySearch(filteredListings, searchQuery);
+      }
+    }
+
+    renderListings(filteredListings);
     setupFiltersAndSearch();
     updatePagination();
   }, 0);

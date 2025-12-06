@@ -34,7 +34,10 @@ export default function ListingCard(listing: any): string {
   `;
 }
 
-function getTimeRemaining(endsAt: string): { text: string; expired: boolean } {
+export function getTimeRemaining(endsAt: string): {
+  text: string;
+  expired: boolean;
+} {
   const now = new Date().getTime();
   const end = new Date(endsAt).getTime();
   const diff = end - now;

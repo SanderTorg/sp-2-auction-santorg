@@ -1,14 +1,8 @@
-import { AuthGuardTemplate } from "../components/auth/AuthGuard";
 import { get, post } from "../services/api";
-import { requireAuth } from "../utils/authGuard";
+import { isLoggedIn } from "../utils/storage";
 import { createHTML } from "../utils/utils";
 
 export default async function SingleListingPage() {
-  if (!requireAuth()) {
-    const template = AuthGuardTemplate();
-    return createHTML(template);
-  }
-
   const listingId = getListingIdFromURL();
 
   if (!listingId) {
@@ -82,6 +76,18 @@ function getBidHistoryHTML(bids: any[], bidCount: number) {
 function getBidFormHTML(timeRemaining: any, highestBid: number) {
   if (timeRemaining.expired) {
     return '<p class="text-red-500 font-semibold">This auction has ended</p>';
+  }
+
+  if (!isLoggedIn()) {
+    return `
+      <div class="flex flex-col border-t pt-6 items-center gap-3">
+        <h3 class="text-xl font-semibold">Want to place a bid?</h3>
+        <p class="text-gray-600">You must be logged in to participate in auctions.</p>
+        <a href="/login" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold transition-colors">
+          Log In to Bid
+        </a>
+      </div>
+    `;
   }
 
   return `
@@ -170,9 +176,9 @@ function singleListingPageTemplate(listing: any) {
                 alt="${sellerName}'s avatar" 
                 class="w-12 h-12 rounded-full"
               />
-              <a href="/profile/${sellerName}" class="text-blue-600 hover:underline">
+              <div class="text-blue-600 font-semibold hover:underline">
                 ${sellerName}
-              </a>
+              </div>
             </div>
           </div>
  

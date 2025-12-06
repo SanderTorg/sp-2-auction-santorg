@@ -1,10 +1,12 @@
 import { AuthGuardTemplate } from "../components/auth/AuthGuard";
 import ListingCard from "../components/listing-card/ListingCard";
+import OwnListingCard from "../components/listing-card/OwnListingCard";
 import { fetchUserProfile, type ProfileData } from "../services/userApi";
 import { requireAuth } from "../utils/authGuard";
 import { getUsernameStorage, isOwnProfile } from "../utils/storage";
 import { createHTML } from "../utils/utils";
 import { get } from "../services/api";
+import { deleteListing } from "../services/listingsApi";
 
 let currentView: "listings" | "bids" | "wins" = "listings";
 
@@ -122,7 +124,6 @@ function profilePageTemplate(data: ProfileData | null) {
 async function fetchUserListings(username: string) {
   try {
     const response = await get(`/auction/profiles/${username}/listings`);
-    console.log("User listings response:", response);
     return response?.data || [];
   } catch (error) {
     console.error("Failed to load user listings:", error);
@@ -152,12 +153,8 @@ async function fetchUserWins(username: string) {
   }
 }
 
-function renderContent(items: any[], emptyMessage: string) {
-  console.log("renderContent called with items:", items);
-  console.log("items.length:", items.length);
-
+function renderContent(items: any[], emptyMessage: string, useOwnCard = false) {
   const contentArea = document.getElementById("js-content-area");
-  console.log("contentArea element:", contentArea);
 
   if (!contentArea) return;
 
@@ -170,11 +167,14 @@ function renderContent(items: any[], emptyMessage: string) {
     return;
   }
 
-  const itemsHTML = items.map((item) => ListingCard(item)).join("");
-  console.log("Generated HTML length:", itemsHTML.length);
-  console.log("First 200 chars:", itemsHTML.substring(0, 200));
+  const itemsHTML = items
+    .map((item) => (useOwnCard ? OwnListingCard(item) : ListingCard(item)))
+    .join("");
   contentArea.innerHTML = itemsHTML;
-  console.log("Content area innerHTML updated");
+
+  if (useOwnCard) {
+    setupDeleteButtons();
+  }
 }
 
 async function showMyListings(username: string) {
@@ -203,7 +203,37 @@ async function showMyListings(username: string) {
   }
 
   const listings = await fetchUserListings(username);
-  renderContent(listings, "You haven't created any listings yet.");
+  renderContent(listings, "You haven't created any listings yet.", true);
+}
+
+function setupDeleteButtons() {
+  const deleteButtons = document.querySelectorAll("#js-delete-listing");
+
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const listingId = (button as HTMLElement).getAttribute("data-listing-id");
+
+      if (!listingId) return;
+
+      const confirmed = confirm(
+        "Are you sure you want to delete this listing?"
+      );
+      if (!confirmed) return;
+
+      try {
+        await deleteListing(listingId);
+        alert("Listing deleted successfully!");
+
+        const username = getUsernameStorage();
+        const listings = await fetchUserListings(username);
+        renderContent(listings, "You haven't created any listings yet.", true);
+      } catch (error) {
+        alert("Failed to delete listing. Please try again.");
+        console.error("Delete error:", error);
+      }
+    });
+  });
 }
 
 async function showMyBids(username: string) {
@@ -232,7 +262,12 @@ async function showMyBids(username: string) {
   }
 
   const bids = await fetchUserBids(username);
-  renderContent(bids, "You haven't placed any bids yet.");
+  const bidListings = bids.map((bid: any) => {
+    return {
+      ...bid.listing,
+    };
+  });
+  renderContent(bidListings, "You haven't placed any bids yet.");
 }
 
 async function showMyWins(username: string) {
