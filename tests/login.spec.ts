@@ -22,7 +22,11 @@ test.describe("Login testing with a valid user and not a valid user", () => {
 
     await page.click('button[type="submit"]');
 
-    await expect(page).toHaveURL("/");
+    const successMessage = page.locator("#js-show-success");
+    await expect(successMessage).toBeVisible({ timeout: 10000 });
+    await expect(successMessage).toHaveText("Login successful!");
+
+    await expect(page).toHaveURL("/", { timeout: 15000 });
 
     const homePageHeader = page.locator(
       'h1:has-text("Welcome to the auction house")'
