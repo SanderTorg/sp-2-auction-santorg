@@ -1,8 +1,3 @@
-export interface RootObject {
-  data: Datum[];
-  meta: Meta;
-}
-
 export interface Datum {
   id: string;
   title: string;

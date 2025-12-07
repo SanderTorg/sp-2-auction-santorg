@@ -8,8 +8,6 @@ import { createHTML } from "../utils/utils";
 import { get } from "../services/api";
 import { deleteListing } from "../services/listingsApi";
 
-let currentView: "listings" | "bids" | "wins" = "listings";
-
 export default async function ProfilePage() {
   if (!requireAuth()) {
     return createHTML(AuthGuardTemplate());
@@ -85,7 +83,7 @@ function profilePageTemplate(data: ProfileData | null) {
           </div>
         </div>
         <div class="w-full gap-3 flex flex-col items-start">
-          <h2>${profile.bio}</h2>
+          <h2>${profile.bio || ""}</h2>
         </div>
       </div>
 
@@ -178,8 +176,6 @@ function renderContent(items: any[], emptyMessage: string, useOwnCard = false) {
 }
 
 async function showMyListings(username: string) {
-  currentView = "listings";
-
   const titleEl = document.getElementById("js-section-title");
   const contentArea = document.getElementById("js-content-area");
   const listingsBtn = document.getElementById("js-my-listings-button");
@@ -237,8 +233,6 @@ function setupDeleteButtons() {
 }
 
 async function showMyBids(username: string) {
-  currentView = "bids";
-
   const titleEl = document.getElementById("js-section-title");
   const contentArea = document.getElementById("js-content-area");
   const listingsBtn = document.getElementById("js-my-listings-button");
@@ -271,8 +265,6 @@ async function showMyBids(username: string) {
 }
 
 async function showMyWins(username: string) {
-  currentView = "wins";
-
   const titleEl = document.getElementById("js-section-title");
   const contentArea = document.getElementById("js-content-area");
   const listingsBtn = document.getElementById("js-my-listings-button");

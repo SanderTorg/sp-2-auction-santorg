@@ -1,9 +1,10 @@
 import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
+import path from "path";
 
-dotenv.config();
+dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
-const BASE_URL = process.env.LOCAL_BASE_URL || "http://localhost:5500";
+const LOCAL_BASE_URL = process.env.LOCAL_BASE_URL || "http://localhost:5173";
 
 export default defineConfig({
   testDir: "./tests",
@@ -13,11 +14,9 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: "html",
-  use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: BASE_URL,
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+  use: {
+    baseURL: LOCAL_BASE_URL,
     trace: "on-first-retry",
   },
 
@@ -39,8 +38,9 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "npm run start",
-    port: 5500,
+    command: "npm run dev",
+    port: 5173,
+    timeout: 50 * 1000,
     reuseExistingServer: !process.env.CI,
   },
 });

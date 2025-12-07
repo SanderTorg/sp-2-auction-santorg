@@ -1,5 +1,6 @@
 const apiKey = "4cace437-0d3d-41b9-95b6-d5deb6a8d9d4";
-const AUTH_URL = "https://v2.api.noroff.dev/auth";
+const AUTH_URL =
+  import.meta.env.VITE_AUTH_API || "https://v2.api.noroff.dev/auth";
 
 export type RegisterForm = {
   name: string;
