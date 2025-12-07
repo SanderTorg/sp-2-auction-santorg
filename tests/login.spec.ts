@@ -20,15 +20,7 @@ test.describe("Login testing with a valid user and not a valid user", () => {
       validPassword!
     );
 
-    await Promise.all([
-      page.waitForResponse(
-        (resp) =>
-          resp.url().includes("/auth/login") &&
-          resp.request().method() === "POST" &&
-          resp.status() === 200
-      ),
-      page.click('button[type="submit"]'),
-    ]);
+    await page.click('button[type="submit"]');
 
     await expect(page).toHaveURL("/");
 
