@@ -16,10 +16,6 @@ export function getApiKey(): string {
   return API_KEY;
 }
 
-export function clearKey(key: string) {
-  localStorage.removeItem(key);
-}
-
 export function saveUser(user: any) {
   saveToStorage(USER_KEY, user);
 }
@@ -33,7 +29,7 @@ export function clearUser(): void {
   localStorage.removeItem(USER_KEY);
 }
 
-export function remvoveToken(): void {
+export function removeToken(): void {
   localStorage.removeItem(TOKEN_KEY);
 }
 
@@ -42,7 +38,7 @@ export function removeUser(): void {
 }
 
 export function logout() {
-  remvoveToken();
+  removeToken();
   removeUser();
   localStorage.removeItem(API_KEY);
   clearProfileCache();
@@ -60,11 +56,6 @@ export function saveToStorage(key: string, value: any) {
 export function getFromStorage(key: string) {
   const value = localStorage.getItem(key);
   return value ? JSON.parse(value) : null;
-}
-
-export function getUserData() {
-  const foo = getFromStorage(USER_KEY);
-  return foo;
 }
 
 export function isOwnProfile(profileName: string): boolean {

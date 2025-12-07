@@ -13,13 +13,18 @@ jobs:
       USER_NAME: ${{ secrets.USER_NAME }}
       USER_EMAIL: ${{ secrets.USER_EMAIL }}
       USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+      VITE_BASE_API: ${{ secrets.VITE_BASE_API }}
+      VITE_AUTH_API: ${{ secrets.VITE_AUTH_API }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: "20"
+          cache: "npm"
       - name: Install dependencies
         run: npm ci
+      - name: Build app
+        run: npm run build
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests

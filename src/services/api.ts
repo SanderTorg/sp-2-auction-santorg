@@ -1,6 +1,6 @@
 import { getToken, getApiKey } from "../utils/storage";
 
-const BASE_API = "https://v2.api.noroff.dev";
+const BASE_API = import.meta.env.VITE_BASE_API || "https://v2.api.noroff.dev";
 interface ApiClientOptions {
   body?: any;
   headers?: Record<string, string>;

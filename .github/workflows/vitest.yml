@@ -7,16 +7,21 @@ on:
     branches: [main, master]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
+    env:
+      VITE_BASE_API: ${{ secrets.VITE_BASE_API }}
+      VITE_AUTH_API: ${{ secrets.VITE_AUTH_API }}
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
       - name: Install dependencies
         run: npm ci
+      - name: Type Check
+        run: npm run build
       - name: Run Vitest tests
         run: npm test
