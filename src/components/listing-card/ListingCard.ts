@@ -4,24 +4,31 @@ export default function ListingCard(listing: any): string {
   const imageUrl = media?.[0]?.url || "https://via.placeholder.com/300x200";
   const imageAlt = media?.[0]?.alt || title;
   const bidCount = _count?.bids || 0;
+  const bidAmount =
+    listing.bids && listing.bids.length > 0
+      ? Math.max(...listing.bids.map((bid: any) => bid.amount))
+      : 0;
   const timeRemaining = getTimeRemaining(endsAt);
 
   return `
-    <a href="/listing/${id}" class="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow hover:animate-pulse overflow-hidden">
+    <a href="/listing/${id}" class="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow hover:animate-pulse overflow-hidden relative">
       <img 
         src="${imageUrl}" 
         alt="${imageAlt}" 
         class="w-full h-48 object-cover"
       />
-      <div class="flex flex-col p-4">
-        <h3 class="text-xl font-semibold mb-2 line-clamp-1 hover:underline">${title}</h3>
-        <p class="text-gray-600 text-sm mb-3 line-clamp-2">${
-          description || "No description"
-        }</p>
+      <span class="flex text-sm text-white absolute top-2 right-2 bg-black/80 px-2 py-1 rounded-lg">
+        ${bidCount} ${bidCount === 1 ? "bid" : "bids"}
+      </span>
+      <div class="flex flex-col p-4 gap-3">
+        <h3 class="text-xl font-semibold line-clamp-1 text-red-600 hover:text-red-800 hover:underline">${title}</h3>
+        <p class="text-gray-600 text-sm line-clamp-2">
+        ${description || "No description"}
+        </p>
         
         <div class="flex justify-between items-center">
-          <span class="flex text-sm text-gray-500">
-            ${bidCount} ${bidCount === 1 ? "bid" : "bids"}
+          <span class="flex text-sm text-green-600 font-medium">
+            ${formatBidAmount(bidAmount)}  
           </span>
           <span class="text-sm font-medium ${
             timeRemaining.expired ? "text-red-500" : "text-green-600"
@@ -57,4 +64,8 @@ export function getTimeRemaining(endsAt: string): {
   } else {
     return { text: `${minutes}m left`, expired: false };
   }
+}
+
+export function formatBidAmount(amount: number): string {
+  return amount > 0 ? `${amount} USD` : "No bids yet";
 }

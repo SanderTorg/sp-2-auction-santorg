@@ -1,4 +1,5 @@
 import ListingCard from "../components/listing-card/ListingCard";
+import SkeletonCard from "../components/listing-card/SkeletonCard";
 import { createHTML } from "../utils/utils";
 import { getAllListings } from "../services/listingsApi";
 
@@ -8,11 +9,11 @@ let currentPage = 1;
 const LISTINGS_PER_PAGE = 12;
 
 export default async function ListingsPage() {
-  allListings = await getAllListings();
   const template = mainTemplate();
   const html = createHTML(template);
 
-  setTimeout(() => {
+  getAllListings().then((data) => {
+    allListings = data;
     filteredListings = [...allListings];
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -31,19 +32,17 @@ export default async function ListingsPage() {
     renderListings(filteredListings);
     setupFiltersAndSearch();
     updatePagination();
-  }, 0);
+  });
 
   return html;
 }
 
 function mainTemplate() {
   return `
-    <section class="flex flex-col items-center gap-5 mx-auto max-w-3xl w-full">
-      <h1 id="js-listings-page" class="flex text-3xl capitalize font-bold justify-center sm:justify-start w-full">all Listings</h1>
-
+    <section class="flex flex-col items-center gap-8 mx-auto max-w-6xl w-full px-4">
       <section class="flex flex-col sm:flex-row gap-3 w-full justify-center items-center">
-        <div class="flex w-full max-w-md justify-center sm:justify-between gap-3">
-          <select id="js-tag-filter" class="flex border rounded-xl p-3 cursor-pointer sm:w-full font-semibold">
+        <div class="flex flex-col sm:flex-row w-full lg:flex-2/4 gap-3">
+          <select id="js-tag-filter" class="w-full sm:w-full lg:w-full border border-gray-300 rounded-lg p-3 cursor-pointer font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option class="font-semibold" value="all">All Tags</option>
             <option class="font-semibold" value="electronics">Electronics</option>
             <option class="font-semibold" value="fashion">Fashion</option>
@@ -53,7 +52,7 @@ function mainTemplate() {
             <option class="font-semibold" value="books">Books</option>
           </select>
 
-          <select id="js-sort-select" class="flex border rounded-xl p-3 cursor-pointer sm:w-full font-semibold">
+          <select id="js-sort-select" class="w-full sm:w-full lg:w-full border border-gray-300 rounded-lg p-3 cursor-pointer font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option class="font-semibold" value="latest">Latest to Oldest</option>
             <option class="font-semibold" value="oldest">Oldest to Latest</option>
             <option class="font-semibold" value="a-z">A-Z</option>
@@ -63,14 +62,16 @@ function mainTemplate() {
           </select>
         </div>
 
-        <div class="flex flex-col w-full max-w-md">
-          <input type="text" id="js-search" name="search" placeholder="Search by title..." class="flex border pl-2 py-3 rounded-xl" />
+        <div class="flex w-full">
+          <input type="text" id="js-search" name="search" placeholder="Search by title..." class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
       </section>
 
       <section class="w-full flex flex-col gap-6 pt-5">
-        <div id="js-all-listings" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">Loading all listings...</div>
-        <div id="js-pagination" class="flex justify-center items-center gap-2 pt-5"></div>
+        <div id="js-all-listings" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          ${Array(12).fill(SkeletonCard()).join("")}
+        </div>
+        <div id="js-pagination" class="flex justify-center flex-wrap items-center gap-2 pt-5"></div>
       </section>
     </section>
   `;
@@ -136,9 +137,9 @@ function sortListings(listings: any[], sortType: string): any[] {
       return sorted.sort((a, b) => a.title.localeCompare(b.title));
     case "z-a":
       return sorted.sort((a, b) => b.title.localeCompare(a.title));
-    case "price-low":
+    case "Bid-low":
       return sorted.sort((a, b) => getHighestBid(a) - getHighestBid(b));
-    case "price-high":
+    case "Bid-high":
       return sorted.sort((a, b) => getHighestBid(b) - getHighestBid(a));
     default:
       return sorted;

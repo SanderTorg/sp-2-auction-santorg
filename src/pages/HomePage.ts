@@ -1,18 +1,17 @@
 import ListingCard from "../components/listing-card/ListingCard";
+import SkeletonCard from "../components/listing-card/SkeletonCard";
 import { getAllListings } from "../services/listingsApi";
 import { createHTML } from "../utils/utils";
 import heroImage from "../images/image/Image-1.webp";
 
 export default async function HomePage() {
-  const allListings = await getAllListings();
-
   const template = homePageTemplate();
   const html = createHTML(template);
 
-  setTimeout(() => {
+  getAllListings().then((allListings) => {
     renderListings(allListings);
     setupHomeSearch();
-  }, 0);
+  });
 
   return html;
 }
@@ -34,22 +33,22 @@ function setupHomeSearch() {
 
 function homePageTemplate() {
   return `
-    <section id="home-page" class="flex flex-col items-center gap-5 mx-auto max-w-4xl w-full">
+    <section id="home-page" class="flex flex-col items-center gap-8 mx-auto max-w-6xl w-full px-4">
     
-    <section class="w-full flex flex-col items-center justify-center gap-3 max-h-1/6 overflow-clip relative bg-black ">
-      <img src="${heroImage}" alt="Auction Illustration" class="w-full opacity-40 object-cover" />
-      <div class="absolute flex flex-col items-center gap-3 text-white px-3">
-        <h1 class="text-3xl text-center font-bold">Welcome to the auction house</h1>
-        <p class="text-center">
-          Discover amazing items up for auction. Browse, bid, and win!
-        </p>
-        <button 
-          onclick="window.location.href='/listings'"
-          class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-        >
-          Explore Listings
-        </button>
-      </div>
+      <section class="w-full flex flex-col items-center justify-center gap-3 relative bg-black rounded-2xl overflow-hidden">
+        <img src="${heroImage}" alt="Auction Illustration" class="w-full min-h-[50dvh] max-h-[70dvh] opacity-45  overflow-hidden object-cover" />
+        <div class="absolute flex flex-col items-center gap-3 text-white px-3">
+          <h1 class="text-3xl text-center font-bold">Welcome to the auction house</h1>
+          <p class="text-center font-semibold text-2xl">
+            Discover amazing items up for auction. Browse, bid, and win!
+          </p>
+          <button
+            onclick="window.location.href='/listings'"
+            class="bg-black text-white px-6 cursor-pointer py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
+          >
+            Explore Listings
+          </button>
+        </div>
       </section>
 
       <section class="w-full max-w-md">
@@ -62,8 +61,7 @@ function homePageTemplate() {
           />
           <button 
             type="submit" 
-            class="bg-blue-600 text-white px-3 py-2
-             rounded-lg hover:bg-blue-700 font-semibold transition-colors"
+            class="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 font-semibold transition-colors cursor-pointer"
           >
             Search
           </button>
@@ -73,41 +71,46 @@ function homePageTemplate() {
       <section class="w-full flex flex-col gap-6">
         <div class="flex justify-between items-center">
           <h2 class="flex text-2xl font-bold capitalize">featured listings</h2>
-          <a href="/listings" class="flex font-semibold hover:underline">View All</a>  
+          <a href="/listings" class="flex font-semibold text-red-600 hover:text-red-800 underline!">View All</a>  
         </div>
-        <div id="js-featured-listings" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">Loading featured listings...</div>
+        <div id="js-featured-listings" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          ${Array(3).fill(SkeletonCard()).join("")}
+        </div>
       </section>
       
       <section class="w-full flex flex-col gap-6 pt-5">
         <div class="flex justify-between items-center">
           <h2 class="flex text-2xl font-bold capitalize">all listings</h2>
-          <a href="/listings" class="flex font-semibold hover:underline">View All</a>  
+          <a href="/listings" class="flex font-semibold text-red-600 hover:text-red-800 underline!">View All</a>  
         </div>
-        <div id="js-all-listings" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">Loading all listings...</div>
+        <div id="js-all-listings" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          ${Array(6).fill(SkeletonCard()).join("")}
+        </div>
       </section>   
       
-      <section class="flex w-full flex-col gap-3">
-        <h2 class="text-2xl font-bold capitalize text-center">
-          join our newsletter
-        </h2>
-        <p class="flex font-semibold text-center justify-center">Get weekly updates and tips straight to your inbox.</p>
-        <p class="flex font-semibold text-center justify-center">
-          Subscribe for a curated selection of articles, news and exclusive
-          offers delivered every friday
-        </p>
-        <div class="flex justify-center">
-          <form class="flex flex-col items-center w-full max-w-md gap-2">
+      <section class="flex w-full flex-col gap-6 bg-linear-to-r from-black to-gray-800 text-white rounded-2xl p-8 sm:p-12 items-center shadow-xl">
+        <div class="flex flex-col gap-2 max-w-2xl text-center">
+          <h2 class="text-3xl font-bold capitalize">
+            Join Our Newsletter
+          </h2>
+          <p class="text-gray-300 text-lg">
+            Get weekly updates, tips, and exclusive offers delivered straight to your inbox every Friday.
+          </p>
+        </div>
+        
+        <div class="w-full flex justify-center">
+          <form class="flex flex-col sm:flex-row items-center w-full max-w-lg gap-3">
             <input
               type="email"
-              placeholder="Enter your email"
-              class="flex border p-3 rounded-lg w-full max-w-md"
+              placeholder="Enter your email address"
+              class="w-full bg-white text-gray-900 border-none rounded-lg p-3.5 focus:outline-none focus:ring-2 focus:ring-red-500 shadow-sm"
             />
             
             <button
               type="submit"
-              class="bg-black capitalize justify-center flex text-white px-6 cursor-pointer py-3 rounded-lg hover:bg-gray-800 transition"
+              class="w-full sm:w-auto bg-red-600 text-white px-8 py-3.5 rounded-lg hover:bg-red-700 font-bold transition-all cursor-pointer whitespace-nowrap shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
-              Subscribe now
+              Subscribe
             </button>
           </form>
         </div>
@@ -120,8 +123,12 @@ function renderListings(listings: any[]) {
   const featuredListingsEl = document.getElementById("js-featured-listings");
   const allListingsEl = document.getElementById("js-all-listings");
 
-  const featuredListings = popularListings(listings);
-  const allListings = latestListings(listings);
+  const activeListings = listings.filter(
+    (listing) => new Date(listing.endsAt).getTime() > new Date().getTime()
+  );
+
+  const featuredListings = popularListings(activeListings);
+  const allListings = latestListings(activeListings);
 
   if (featuredListingsEl) {
     featuredListingsEl.innerHTML = featuredListings

@@ -12,31 +12,54 @@ export default async function LoginPage() {
 
 function loginPageTemplate() {
   return `
-    <section id="login-page" class="flex flex-col items-center gap-3 mx-auto my-auto max-w-md w-full">
-      <h1 class="text-2xl font-bold flex text-center">Login to Your Account</h1>
+    <section id="login-page" class="flex flex-col items-center gap-6 mx-auto my-auto max-w-md w-full px-4 justify-center">
       
       ${errorTemplate()}
       ${successTemplate()}
 
-      <form id="js-login-form" class="flex flex-col gap-4 border p-6 rounded-lg shadow-md w-full ">
-        <div class="flex flex-col relative">
-          <label for="email" aria-label="Email" class="flex absolute -top-3 left-5 bg-white px-1 dark:bg-[#242424]">Email</label>
-          <input type="email" id="email" name="email" placeholder="@stud.noroff.no" class="flex border pl-2 py-3 rounded-xl" required />
-        </div>
+      <div class="w-full flex flex-col gap-6 bg-linear-to-r from-black to-gray-800 text-white rounded-2xl p-8 sm:p-12 shadow-xl">
+        <h1 class="text-3xl font-bold text-center mb-2">Login</h1>
+        
+        <form id="js-login-form" class="flex flex-col gap-5 w-full">
+          <div class="flex flex-col gap-2">
+            <label for="email" class="font-semibold ml-1">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="@stud.noroff.no" 
+              class="w-full bg-white text-gray-900 border-none rounded-lg p-3.5 focus:outline-none focus:ring-2 focus:ring-red-500 shadow-sm" 
+              required 
+            />
+          </div>
 
+          <div class="flex flex-col gap-2">
+            <label for="password" class="font-semibold ml-1">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="Your password" 
+              class="w-full bg-white text-gray-900 border-none rounded-lg p-3.5 focus:outline-none focus:ring-2 focus:ring-red-500 shadow-sm" 
+              required 
+            />
+          </div>
 
-        <div class="flex flex-col relative">
-          <label for="password" aria-label="Password" class="flex absolute -top-3 left-5 bg-white px-1 dark:bg-[#242424]">Password</label>
-
-          <input type="password" id="password" name="password" placeholder="Your password" class="flex border pl-2 py-3 rounded-xl" required />
-        </div>
-
-        <div class="flex flex-col items-center gap-1 min-[350px]:flex-row justify-center">
-          <p class="text-center font-semibold">Don't have an account? </p>
-          <a href="/register" class="hover:underline font-semibold">Register here</a>
-        </div>  
-        <button type="submit" class="flex p-4 justify-center items-center font-semibold text-white text-xl bg-[#101828]  border rounded-2xl cursor-pointer hover:bg-gray-800">LogIn</button>
-      </form>
+          <div class="flex flex-col items-center gap-2 mt-2">
+            <button 
+              type="submit" 
+              class="w-full bg-red-600 text-white px-8 py-3.5 rounded-lg hover:bg-red-700 font-bold transition-all cursor-pointer shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              Log In
+            </button>
+            
+            <div class="flex gap-1 text-sm mt-2">
+              <p class="text-gray-300">Don't have an account?</p>
+              <a href="/register" class="text-white hover:text-red-400 font-semibold underline decoration-red-500">Register here</a>
+            </div>
+          </div>  
+        </form>
+      </div>
     </section>
   `;
 }

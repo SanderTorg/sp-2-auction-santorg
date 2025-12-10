@@ -33,7 +33,7 @@ function editProfilePageTemplate(profileData: any) {
   const bannerAlt = profileData?.banner?.alt || "";
 
   return `
-    <section class="flex flex-col items-center gap-6 mx-auto max-w-2xl w-full">
+    <section class="flex flex-col items-center gap-6 mx-auto max-w-3xl w-full px-4">
       <div class="w-full gap-2 flex flex-col items-center sm:items-start">
         <h1 class="text-3xl font-bold">Edit Profile</h1>
         <p class="text-gray-600">Update your profile information</p>
@@ -105,7 +105,7 @@ function editProfilePageTemplate(profileData: any) {
           
           <button 
             type="submit"
-            class="cursor-pointer px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition"
+            class="cursor-pointer px-6 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition"
           >
             Save Changes
           </button>

@@ -69,7 +69,17 @@ function navigate(event: MouseEvent) {
 
 async function renderMainContent(path = "") {
   const mainContentEl = document.getElementById("main-content");
+  const footerEl = document.getElementById("js-footer");
+
   if (!mainContentEl || !path) return;
+
+  if (footerEl) {
+    if (path === "/login" || path === "/register") {
+      footerEl.classList.add("hidden");
+    } else {
+      footerEl.classList.remove("hidden");
+    }
+  }
 
   const html = await router(path);
   if (typeof html === "string") {

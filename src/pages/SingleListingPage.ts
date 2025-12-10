@@ -83,7 +83,7 @@ function getBidFormHTML(timeRemaining: any, highestBid: number) {
       <div class="flex flex-col border-t pt-6 items-center gap-3">
         <h3 class="text-xl font-semibold">Want to place a bid?</h3>
         <p class="text-gray-600">You must be logged in to participate in auctions.</p>
-        <a href="/login" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold transition-colors">
+        <a href="/login" class="bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 font-semibold transition-colors">
           Log In to Bid
         </a>
       </div>
@@ -105,7 +105,7 @@ function getBidFormHTML(timeRemaining: any, highestBid: number) {
         />
         <button 
           type="submit" 
-          class="flex w-full max-w-xs sm:flex-1 justify-center bg-blue-600 cursor-pointer text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+          class="flex w-full max-w-xs sm:flex-1 justify-center bg-black cursor-pointer text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
         > 
           Place Bid
         </button>
@@ -131,8 +131,8 @@ function singleListingPageTemplate(listing: any) {
   const sellerAvatar = seller.avatar.url;
 
   return `
-  <section class="flex flex-col gap-6 mx-auto max-w-2xl w-full pb-2.5">
-    <a href="/" class="flex items-start text-blue-600 hover:text-blue-800"> <- Back to Listings</a>
+  <section class="flex flex-col gap-6 mx-auto max-w-4xl w-full px-4 pb-2.5">
+    <a href="/" class="flex items-start text-red-600 hover:text-red-800"> <- Back to Listings</a>
     
      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <img 
@@ -176,7 +176,7 @@ function singleListingPageTemplate(listing: any) {
                 alt="${sellerName}'s avatar" 
                 class="w-12 h-12 rounded-full"
               />
-              <div class="text-blue-600 font-semibold hover:underline">
+              <div class="text-red-600 font-semibold">
                 ${sellerName}
               </div>
             </div>
