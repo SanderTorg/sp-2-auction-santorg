@@ -55,62 +55,74 @@ function profilePageTemplate(data: ProfileData | null) {
   const ownProfile = isOwnProfile(profile.name);
 
   return `
-    <section class="flex flex-col items-center gap-3  mx-auto max-w-5xl w-full  rounded-2xl border"> 
-      <img src="${profile.banner.url}" alt="${
+    <section class="flex flex-col items-center gap-3 mx-auto max-w-6xl w-full px-4 rounded-2xl"> 
+      <div class="w-full border rounded-2xl overflow-hidden relative">
+        <img src="${profile.banner.url}" alt="${
     profile.banner.alt
   }" class="w-full h-48 object-cover rounded-t-2xl" />
-      <div class="flex flex-col gap-3 p-4 w-full">
-        <div class="flex items-center gap-4">
-          <img src="${profile.avatar.url}" alt="${
+        ${
+          ownProfile
+            ? `
+        <a href="/edit-profile">
+          <button id="js-edit-profile-button" class="absolute top-4 right-4 px-6 py-3 font-semibold bg-black text-white rounded-lg hover:bg-gray-800 cursor-pointer transition-colors">
+          Edit Profile
+          </button>
+         </a>`
+            : ""
+        }
+        <div class="flex flex-col gap-3 p-4 w-full">
+          <div class="flex items-center gap-4">
+            <img src="${profile.avatar.url}" alt="${
     profile.avatar.alt
   }" class="w-15 h-15 rounded-full object-cover" />
-          <div class="w-full flex flex-wrap items-center">
-            <div class="flex flex-col">
-              <h3 class="flex text-xl font-bold">${profile.name}</h3>
-              <div class="flex gap-1 flex-wrap">
-              ${
-                ownProfile
-                  ? `<p class=" flex font-semibold gap-1">Credits: <span class="flex text-green-500">
-                  ${profile.credits}$</span></p>`
-                  : ""
-              }
-                <p class="flex font-semibold">Listings: ${
-                  profile._count.listings
-                }</p>
-                <p class="flex font-semibold">Wins: ${profile._count.wins}</p>
+            <div class="w-full flex flex-wrap items-center">
+              <div class="flex flex-col">
+                <h3 class="flex text-xl font-bold">${profile.name}</h3>
+                <div class="flex gap-1 flex-wrap">
+                ${
+                  ownProfile
+                    ? `<p class=" flex font-semibold gap-1">Credits: <span class="flex text-green-500">
+                    ${profile.credits}$</span></p>`
+                    : ""
+                }
+                  <p class="flex font-semibold">Listings: ${
+                    profile._count.listings
+                  }</p>
+                  <p class="flex font-semibold">Wins: ${profile._count.wins}</p>
+                </div>
               </div>
             </div>
           </div>
+          <div class="w-full gap-3 flex flex-col items-start">
+            <h2>${profile.bio || ""}</h2>
+          </div>
         </div>
-        <div class="w-full gap-3 flex flex-col items-start">
-          <h2>${profile.bio || ""}</h2>
-        </div>
-      </div>
 
-      ${
-        ownProfile
-          ? `
-            <div class="flex gap-4 w-full flex-wrap justify-center border-t p-4">
-              <button id="js-my-listings-button" class="p-2 font-semibold bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer">My Listings</button>
-              <button id="js-my-bids-button" class="p-2 font-semibold bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer">My Bids</button>
-              <button id="js-my-wins-button" class="p-2 font-semibold bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer">My Wins</button>
-              <a href="/edit-profile">
-                <button id="js-edit-profile-button" class="p-2 font-semibold bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">
-                  Edit Profile
-                </button>
-              </a>
-              <a href="/create-listing">
-                <button id="js-create-listing-button" class="p-2 font-semibold bg-blue-500 text-white rounded hover:bg-blue-600 cursor-pointer">
-                  Create Listing
-                </button>
-              </a>
-            </div>
-              `
-          : ""
-      }
+        ${
+          ownProfile
+            ? `
+              <div class="flex flex-col gap-4 w-full flex-wrap justify-center border-t p-4">
+                <a href="/create-listing" class="flex justify-center w-full">
+                  <button id="js-create-listing-button" class="w-full max-w-2xl px-6 py-3 font-semibold bg-black text-white rounded-lg hover:bg-gray-800 cursor-pointer transition-colors">
+                    Create Listing
+                  </button>
+                </a>
+
+                <div class="w-full border-t flex max-w-2xl mx-auto"></div>
+
+                <div class="flex gap-4 w-full flex-wrap justify-center">
+                  <button id="js-my-listings-button" class="px-6 py-3 font-semibold bg-black text-white rounded-lg hover:bg-gray-800 cursor-pointer transition-colors">My Listings</button>
+                  <button id="js-my-bids-button" class="px-6 py-3 font-semibold bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer transition-colors">My Bids</button>
+                  <button id="js-my-wins-button" class="px-6 py-3 font-semibold bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer transition-colors">My Wins</button>
+                </div>
+              </div>
+                `
+            : ""
+        }
+      </div>
     </section>
 
-    <section class="w-full flex flex-col gap-6 mt-6 mx-auto max-w-5xl">
+    <section class="w-full flex flex-col gap-6 mt-6 mx-auto max-w-6xl px-4">
       <h2 id="js-section-title" class="text-2xl font-bold">My Listings</h2>  
       <div id="js-content-area" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         Loading...
@@ -187,15 +199,15 @@ async function showMyListings(username: string) {
 
   if (listingsBtn) {
     listingsBtn.className =
-      "p-2 font-semibold bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer";
+      "px-6 py-3 font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors";
   }
   if (bidsBtn) {
     bidsBtn.className =
-      "p-2 font-semibold bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer";
+      "px-6 py-3 font-semibold bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer transition-colors";
   }
   if (winsBtn) {
     winsBtn.className =
-      "p-2 font-semibold bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer";
+      "px-6 py-3 font-semibold bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer transition-colors";
   }
 
   const listings = await fetchUserListings(username);
@@ -244,15 +256,15 @@ async function showMyBids(username: string) {
 
   if (listingsBtn) {
     listingsBtn.className =
-      "p-2 font-semibold bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer";
+      "px-6 py-3 font-semibold bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer transition-colors";
   }
   if (bidsBtn) {
     bidsBtn.className =
-      "p-2 font-semibold bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer";
+      "px-6 py-3 font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors";
   }
   if (winsBtn) {
     winsBtn.className =
-      "p-2 font-semibold bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer";
+      "px-6 py-3 font-semibold bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer transition-colors";
   }
 
   const bids = await fetchUserBids(username);
@@ -276,15 +288,15 @@ async function showMyWins(username: string) {
 
   if (listingsBtn) {
     listingsBtn.className =
-      "p-2 font-semibold bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer";
+      "px-6 py-3 font-semibold bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer transition-colors";
   }
   if (bidsBtn) {
     bidsBtn.className =
-      "p-2 font-semibold bg-gray-300 text-gray-700 rounded hover:bg-gray-400 cursor-pointer";
+      "px-6 py-3 font-semibold bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer transition-colors";
   }
   if (winsBtn) {
     winsBtn.className =
-      "p-2 font-semibold bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer";
+      "px-6 py-3 font-semibold bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition-colors";
   }
 
   const wins = await fetchUserWins(username);

@@ -25,11 +25,11 @@ function mainTemplate() {
 
 function navbarTemplate() {
   return `
-<nav id="js-navbar"class="flex text-center justify-between gap-1 items-center p-2 text-white w-full flex-wrap">
-  <div class="flex items-center gap-2 justify-between w-full min-[463px]:w-auto">
-    <a href="/" class="flex text-2xl font-bold text-center min-[463px]:order-2">Auction App</a>
+<nav id="js-navbar" class="flex text-center justify-between gap-1 items-center p-2 text-white w-full flex-wrap">
+  <div class="flex items-center gap-2 justify-between w-full min-[490px]:w-auto">
+    <a href="/" class="flex text-2xl font-bold text-center min-[490px]:order-2 bg-linear-to-r from-red-600 to-white bg-clip-text !text-transparent">Auction House</a>
 
-    <div class="min-[463px]:order-1 cursor-pointer hover:bg-red-500/40 p-1 rounded" id="js-hamburger" aria-controls="js-nav-menu" aria-expanded="false">
+    <div class="min-[490px]:order-1 cursor-pointer hover:bg-red-500/40 p-1 rounded" id="js-hamburger" aria-controls="js-nav-menu" aria-expanded="false">
       <span class="block w-[25px] h-[3px] my-[5px] bg-white transition-all duration-300 ease-in-out"></span>
       <span class="block w-[25px] h-[3px] my-[5px] bg-white transition-all duration-300 ease-in-out"></span>
       <span class="block w-[25px] h-[3px] my-[5px] bg-white transition-all duration-300 ease-in-out"></span>
@@ -49,14 +49,14 @@ function userInfoTemplate() {
   const avatarAlt = getAvatarAlt();
   if (!loggedIn) {
     return `
-      <div class="flex items-center gap-3 flex-wrap justify-center">
+      <div class="flex items-center gap-3 flex-wrap justify-center w-full min-[490px]:w-auto">
         ${logInButtonTemplate()}  
         ${registerButtonTemplate()}
       </div>
       `;
   } else {
     return `
-      <div class="flex items-center gap-3 flex-wrap justify-center w-full min-[463px]:w-auto">
+      <div class="flex items-center gap-3 flex-wrap justify-center w-full min-[490px]:w-auto">
         <div>
           Credit: ${credits}$
         </div>
@@ -101,7 +101,7 @@ export function toggleMenu() {
 
 function logInButtonTemplate() {
   return `
-    <a id="js-login-button" class="cursor-pointer bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+    <a id="js-login-button" class="cursor-pointer bg-gray-700 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">
       Login
     </a>
   `;
@@ -118,7 +118,7 @@ function setupLoginButton() {
 
 function logoutButtonTemplate() {
   return `
-    <button id="js-logout-button" class="cursor-pointer bg-red-700 hover:bg-red-900 text-white font-bold py-1 px-2 rounded">
+    <button id="js-logout-button" class="cursor-pointer bg-red-600 hover:bg-red-900 text-white font-bold py-1 px-2 rounded">
       Logout
     </button>
   `;
@@ -136,7 +136,7 @@ function setupLogoutButton() {
 
 function registerButtonTemplate() {
   return `
-    <a id="js-register-button" class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    <a id="js-register-button" class="cursor-pointer bg-gray-700 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">
       Register
     </a>
   `;

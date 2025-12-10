@@ -15,7 +15,7 @@ export default async function CreateListingsPage() {
 
 function createListingTemplate() {
   return `
-    <section class="flex flex-col items-center gap-6 mx-auto max-w-2xl w-full">
+    <section class="flex flex-col items-center gap-6 mx-auto max-w-3xl w-full px-4">
       <div class="w-full gap-2 flex flex-col items-center sm:items-start"> 
         <h1 class="text-3xl font-bold">Create a New Listing</h1>
         <div class="flex flex-col">
@@ -109,7 +109,7 @@ function createListingTemplate() {
 
           <button 
             type="submit" 
-            class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+            class="flex-1 bg-black text-white py-3 px-6 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
           > Create Listing</button>
         </div>
       </form>
