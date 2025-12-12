@@ -2,7 +2,7 @@ import ListingCard from "../components/listing-card/ListingCard";
 import SkeletonCard from "../components/listing-card/SkeletonCard";
 import { getAllListings } from "../services/listingsApi";
 import { createHTML } from "../utils/utils";
-import heroImage from "../images/image/Image-1.webp";
+import heroImage from "../images/image/hero-img.png";
 
 export default async function HomePage() {
   const template = homePageTemplate();
