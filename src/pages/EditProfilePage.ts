@@ -33,7 +33,7 @@ function editProfilePageTemplate(profileData: any) {
   const bannerAlt = profileData?.banner?.alt || "";
 
   return `
-    <section class="flex flex-col items-center gap-6 mx-auto max-w-3xl w-full px-4">
+    <section class="flex flex-col items-center gap-6 mx-auto max-w-3xl w-full">
       <div class="w-full gap-2 flex flex-col items-center sm:items-start">
         <h1 class="text-3xl font-bold">Edit Profile</h1>
         <p class="text-gray-600">Update your profile information</p>
@@ -42,7 +42,7 @@ function editProfilePageTemplate(profileData: any) {
       ${errorTemplate()}
       ${successTemplate()}
 
-      <form id="js-edit-profile-form" class="w-full flex flex-col gap-6 border p-6 rounded-lg shadow-md">
+      <form id="js-edit-profile-form" class="w-full flex flex-col gap-6 border p-4 rounded-lg shadow-md">
         <div class="flex flex-col gap-2">
           <label for="bio" class="font-semibold">Bio</label>
           <textarea 
@@ -100,7 +100,7 @@ function editProfilePageTemplate(profileData: any) {
           />
         </div>
       
-        <div class="flex justify-center gap-4">
+        <div class="flex flex-wrap justify-center gap-4">
           <a href="/profile" class="flex items-center px-6 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-gray-100 transition">Cancel</a>
           
           <button 

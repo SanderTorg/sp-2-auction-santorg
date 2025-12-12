@@ -15,19 +15,19 @@ export default async function CreateListingsPage() {
 
 function createListingTemplate() {
   return `
-    <section class="flex flex-col items-center gap-6 mx-auto max-w-3xl w-full px-4">
+    <section class="flex flex-col items-center gap-6 mx-auto max-w-3xl w-full">
       <div class="w-full gap-2 flex flex-col items-center sm:items-start"> 
-        <h1 class="text-3xl font-bold">Create a New Listing</h1>
-        <div class="flex flex-col">
-          <p class="text-gray-600">Listing creation form will go here.</p>
-          <p>Every field is required to create a listing.</p>
+        <h1 class="text-3xl font-bold flex text-center jus">Create a New Listing</h1>
+        <div class="flex flex-col text-center justify-center sm:justify-start">
+          <p class="text-gray-600 flex justify-center sm:justify-start">Listing creation form will go here.</p>
+          <p class="text-gray-600 flex justify-center sm:justify-start">Every field is required to create a listing.</p>
         </div>
       </div>
 
       ${errorTemplate()}
       ${successTemplate()}
 
-      <form id="create-listing-form" class="w-full flex flex-col gap-6 border p-6 rounded-lg shadow-md">
+      <form id="create-listing-form" class="w-full flex flex-col gap-6 border p-4 rounded-lg shadow-md">
         <div class="flex flex-col gap-2">
            <label for="title" class="font-semibold">Title </label>
           <input 
@@ -101,7 +101,7 @@ function createListingTemplate() {
           <small class="text-gray-500">Select when the auction should end</small>
         </div>
 
-        <div class="flex gap-4">
+        <div class="flex flex-wrap gap-4">
           <a 
             href="/" 
             class="flex-1 text-center bg-gray-200 text-gray-800 py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors font-semibold"
