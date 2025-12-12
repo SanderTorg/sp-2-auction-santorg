@@ -36,6 +36,7 @@ export default function ListingCard(listing: any): string {
             ${timeRemaining.text}
           </span>
         </div>
+        <button data-listing-id="${id}" class="flex font-semibold bg-black hover:bg-gray-800 text-center justify-center cursor-pointer text-white px-4 py-2 rounded">Bid</button>
       </div>
     </a>
   `;

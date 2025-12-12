@@ -148,7 +148,7 @@ function editListingTemplate(listing: any) {
 
           <button 
             type="submit" 
-            class="flex-1 bg-black text-white py-3 px-6 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
+            class="flex-1 bg-black cursor-pointer text-white py-3 px-6 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
           >Update Listing</button>
         </div>
       </form>

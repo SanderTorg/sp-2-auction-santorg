@@ -109,7 +109,7 @@ function createListingTemplate() {
 
           <button 
             type="submit" 
-            class="flex-1 bg-black text-white py-3 px-6 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
+            class="flex-1 cursor-pointer bg-black text-white py-3 px-6 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
           > Create Listing</button>
         </div>
       </form>

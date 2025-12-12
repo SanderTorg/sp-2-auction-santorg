@@ -29,11 +29,11 @@ function navbarTemplate() {
   <div class="flex items-center gap-2 justify-between w-full min-[490px]:w-auto">
     <a href="/" class="flex text-2xl font-bold text-center min-[490px]:order-2 bg-linear-to-r from-red-600 to-white bg-clip-text !text-transparent">Auction House</a>
 
-    <div class="min-[490px]:order-1 cursor-pointer hover:bg-red-500/40 p-1 rounded" id="js-hamburger" aria-controls="js-nav-menu" aria-expanded="false">
+    <button class="min-[490px]:order-1 cursor-pointer hover:bg-red-500/40 p-1 rounded" id="js-hamburger" aria-controls="js-nav-menu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="block w-[25px] h-[3px] my-[5px] bg-white transition-all duration-300 ease-in-out"></span>
       <span class="block w-[25px] h-[3px] my-[5px] bg-white transition-all duration-300 ease-in-out"></span>
       <span class="block w-[25px] h-[3px] my-[5px] bg-white transition-all duration-300 ease-in-out"></span>
-    </div>
+    </button>
   </div>
 
   ${userInfoTemplate()}
@@ -62,7 +62,7 @@ function userInfoTemplate() {
         </div>
         <a href="/profile" >
           <div class="sr-only">${name}</div>
-          <img src="${avatarUrl}" alt="${avatarAlt}" class="w-10 h-10 rounded-full" />
+          <img src="${avatarUrl}" alt="${avatarAlt}" class="w-10 h-10 rounded-full" width="40px" height="40px"/>
         </a>
         ${logoutButtonTemplate()}
       </div>
