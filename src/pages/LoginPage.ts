@@ -2,11 +2,15 @@ import { createHTML } from "../utils/utils";
 import { loginUser } from "../services/authApi";
 import { saveToken, saveUser } from "../utils/storage";
 import { errorTemplate, successTemplate } from "../components/auth/Message";
+import { animateSlideUp } from "../utils/animations";
 
 export default async function LoginPage() {
   const template = loginPageTemplate();
   const html = createHTML(template);
-  setTimeout(() => setupLoginForm(), 0);
+  setTimeout(() => {
+    setupLoginForm();
+    animateSlideUp("#login-page > div");
+  }, 0);
   return html;
 }
 
@@ -70,7 +74,7 @@ async function handleLogin(event: Event) {
   const form = event.target as HTMLFormElement;
   const formData = new FormData(form);
   const submitButtonEl = form.querySelector(
-    'button[type="submit"]'
+    'button[type="submit"]',
   ) as HTMLButtonElement;
 
   const email = formData.get("email") as string;

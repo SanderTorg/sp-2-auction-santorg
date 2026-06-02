@@ -2,6 +2,7 @@ import ListingCard from "../components/listing-card/ListingCard";
 import SkeletonCard from "../components/listing-card/SkeletonCard";
 import { createHTML } from "../utils/utils";
 import { getAllListings } from "../services/listingsApi";
+import { animateStaggerIn } from "../utils/animations";
 
 let allListings: any[] = [];
 let filteredListings: any[] = [];
@@ -21,7 +22,7 @@ export default async function ListingsPage() {
 
     if (searchQuery) {
       const searchInput = document.getElementById(
-        "js-search"
+        "js-search",
       ) as HTMLInputElement;
       if (searchInput) {
         searchInput.value = searchQuery;
@@ -79,7 +80,7 @@ function mainTemplate() {
 
 function renderListings(listings: any[]) {
   const listingsContainer = document.getElementById(
-    "js-all-listings"
+    "js-all-listings",
   ) as HTMLElement;
 
   if (!listingsContainer) return;
@@ -95,6 +96,7 @@ function renderListings(listings: any[]) {
 
   const listingsHTML = listings.map((listing) => ListingCard(listing)).join("");
   listingsContainer.innerHTML = listingsHTML;
+  animateStaggerIn("#js-all-listings");
 }
 
 function getHighestBid(listing: any): number {
@@ -106,7 +108,7 @@ function filterByTag(listings: any[], tag: string): any[] {
   if (tag === "all") return listings;
 
   return listings.filter((listing) =>
-    listing.tags?.some((t: string) => t.toLowerCase() === tag.toLowerCase())
+    listing.tags?.some((t: string) => t.toLowerCase() === tag.toLowerCase()),
   );
 }
 
@@ -117,7 +119,7 @@ function filterBySearch(listings: any[], query: string): any[] {
   return listings.filter(
     (listing) =>
       listing.title?.toLowerCase().includes(lowerQuery) ||
-      listing.description?.toLowerCase().includes(lowerQuery)
+      listing.description?.toLowerCase().includes(lowerQuery),
   );
 }
 
@@ -127,11 +129,11 @@ function sortListings(listings: any[], sortType: string): any[] {
   switch (sortType) {
     case "latest":
       return sorted.sort(
-        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime(),
       );
     case "oldest":
       return sorted.sort(
-        (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime()
+        (a, b) => new Date(a.created).getTime() - new Date(b.created).getTime(),
       );
     case "a-z":
       return sorted.sort((a, b) => a.title.localeCompare(b.title));
@@ -149,10 +151,10 @@ function sortListings(listings: any[], sortType: string): any[] {
 function applyFilters() {
   const searchInput = document.getElementById("js-search") as HTMLInputElement;
   const tagSelect = document.getElementById(
-    "js-tag-filter"
+    "js-tag-filter",
   ) as HTMLSelectElement;
   const sortSelect = document.getElementById(
-    "js-sort-select"
+    "js-sort-select",
   ) as HTMLSelectElement;
 
   if (!searchInput || !tagSelect || !sortSelect) return;
@@ -276,10 +278,10 @@ function updatePagination() {
 function setupFiltersAndSearch() {
   const searchInput = document.getElementById("js-search") as HTMLInputElement;
   const tagSelect = document.getElementById(
-    "js-tag-filter"
+    "js-tag-filter",
   ) as HTMLSelectElement;
   const sortSelect = document.getElementById(
-    "js-sort-select"
+    "js-sort-select",
   ) as HTMLSelectElement;
 
   if (searchInput) {

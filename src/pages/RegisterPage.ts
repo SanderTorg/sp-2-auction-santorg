@@ -2,11 +2,13 @@ import { registerUser } from "../services/authApi";
 import { createHTML } from "../utils/utils";
 import { showError, showSuccess } from "./LoginPage";
 import { errorTemplate, successTemplate } from "../components/auth/Message";
+import { animateSlideUp } from "../utils/animations";
 
 export default async function RegisterPage() {
   const template = registerPageTemplate();
   setTimeout(() => {
     setupRegisterForm();
+    animateSlideUp("section.flex.flex-col.items-center > div");
   }, 0);
   return createHTML(template);
 }

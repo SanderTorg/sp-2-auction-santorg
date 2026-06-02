@@ -1,6 +1,7 @@
 import { get, post } from "../services/api";
 import { isLoggedIn } from "../utils/storage";
 import { createHTML } from "../utils/utils";
+import { animateFadeIn, animateStaggerIn } from "../utils/animations";
 
 export default async function SingleListingPage() {
   const listingId = getListingIdFromURL();
@@ -17,7 +18,11 @@ export default async function SingleListingPage() {
   const template = singleListingPageTemplate(listingData);
   const html = createHTML(template);
 
-  setTimeout(() => setupBidForm(listingId), 0);
+  setTimeout(() => {
+    setupBidForm(listingId);
+    animateFadeIn("section.flex.flex-col.gap-6", 0);
+    animateStaggerIn(".p-6");
+  }, 0);
 
   return html;
 }
@@ -25,7 +30,7 @@ export default async function SingleListingPage() {
 async function getListingDetails(listingId: string) {
   try {
     const response = await get(
-      `/auction/listings/${listingId}?_seller=true&_bids=true`
+      `/auction/listings/${listingId}?_seller=true&_bids=true`,
     );
     const data = response.data;
     return data;
@@ -65,7 +70,7 @@ function getBidHistoryHTML(bids: any[], bidCount: number) {
               bid.amount
             }</span>
           </div>
-        `
+        `,
           )
           .join("")}
       </div>
@@ -202,7 +207,7 @@ function getTimeRemaining(endsAt: string) {
 
   const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
   const hours = Math.floor(
-    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
   );
   const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
 
@@ -237,7 +242,7 @@ function setupBidForm(listingId: string) {
       const formData = new FormData(bidFormEl);
       const bidAmount = formData.get("bidAmount") as string;
       const submitButton = bidFormEl.querySelector(
-        'button[type="submit"]'
+        'button[type="submit"]',
       ) as HTMLButtonElement;
 
       if (!bidAmount || isNaN(Number(bidAmount)) || Number(bidAmount) <= 0) {
