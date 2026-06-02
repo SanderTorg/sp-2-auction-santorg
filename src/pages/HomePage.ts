@@ -3,6 +3,7 @@ import SkeletonCard from "../components/listing-card/SkeletonCard";
 import { getAllListings } from "../services/listingsApi";
 import { createHTML } from "../utils/utils";
 import heroImage from "../images/image/hero-img.png";
+import { animateStaggerIn, animateFadeIn } from "../utils/animations";
 
 export default async function HomePage() {
   const template = homePageTemplate();
@@ -12,6 +13,10 @@ export default async function HomePage() {
     renderListings(allListings);
     setupHomeSearch();
   });
+
+  setTimeout(() => {
+    animateFadeIn("#home-page .absolute", 0.2);
+  }, 0);
 
   return html;
 }
@@ -124,7 +129,7 @@ function renderListings(listings: any[]) {
   const allListingsEl = document.getElementById("js-all-listings");
 
   const activeListings = listings.filter(
-    (listing) => new Date(listing.endsAt).getTime() > new Date().getTime()
+    (listing) => new Date(listing.endsAt).getTime() > new Date().getTime(),
   );
 
   const featuredListings = popularListings(activeListings);
@@ -134,18 +139,20 @@ function renderListings(listings: any[]) {
     featuredListingsEl.innerHTML = featuredListings
       .map((listing) => ListingCard(listing))
       .join("");
+    animateStaggerIn("#js-featured-listings");
   }
   if (allListingsEl) {
     allListingsEl.innerHTML = allListings
       .map((listing) => ListingCard(listing))
       .join("");
+    animateStaggerIn("#js-all-listings");
   }
 }
 
 function latestListings(listings: any[]) {
   return listings
     .sort(
-      (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+      (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime(),
     )
     .slice(0, 6);
 }

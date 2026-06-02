@@ -3,6 +3,7 @@ import Navbar, { toggleMenu } from "./components/header/Navbar";
 import router from "./router";
 import "./styles/style.css";
 import { setupNavFunctions } from "./components/header/Navbar";
+import { animateSlideDown, animatePageIn } from "./utils/animations";
 
 async function main() {
   document.addEventListener("DOMContentLoaded", async () => {
@@ -21,6 +22,7 @@ async function main() {
     setupNavFunctions();
     toggleMenu();
     setupNavLinks();
+    animateSlideDown("#js-header");
 
     const footerHtml = await Footer();
     if (footerEl && footerHtml) {
@@ -88,4 +90,5 @@ async function renderMainContent(path = "") {
     mainContentEl.innerHTML = "";
     mainContentEl.appendChild(html);
   }
+  animatePageIn("#main-content");
 }
